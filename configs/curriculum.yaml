@@ -1,0 +1,72 @@
+# Curriculum Learning Configuration for LunarLander-v3 (Prompt 04)
+
+curriculum:
+  name: "Progressive_Environmental_Stressors"
+  min_eval_episodes: 20
+  success_threshold: 0.70        # Minimum landing success rate to advance (70%)
+  rollback_threshold: 0.30       # Success rate below which policy rolls back (30%)
+  min_consecutive_passes: 2      # Consecutive evaluations meeting threshold before stage advancement
+  min_steps_per_stage: 20000     # Minimum training timesteps spent in a stage before advancing
+
+stages:
+  0:
+    name: "Stage 0: Standard Environment"
+    description: "Standard LunarLander with fixed nominal physics (-10.0 m/s^2 gravity, no wind)"
+    randomization:
+      enabled: false
+      mode: "fixed"
+      fixed_gravity: -10.0
+      fixed_enable_wind: false
+      fixed_wind_power: 0.0
+      fixed_turbulence_power: 0.0
+
+  1:
+    name: "Stage 1: Moderate Gravity Variation"
+    description: "Slight gravity modulation without aerodynamic disturbances"
+    randomization:
+      enabled: true
+      mode: "randomized"
+      gravity_range: [-11.0, -9.0]
+      wind:
+        probability: 0.0
+        power_range: [0.0, 0.0]
+        turbulence_range: [0.0, 0.0]
+
+  2:
+    name: "Stage 2: Mild Wind Introduction"
+    description: "Moderate gravity variation combined with mild aerodynamic wind"
+    randomization:
+      enabled: true
+      mode: "randomized"
+      gravity_range: [-11.0, -9.0]
+      wind:
+        probability: 0.6
+        power_range: [5.0, 15.0]
+        turbulence_range: [0.2, 1.0]
+
+  3:
+    name: "Stage 3: High Wind and Turbulence"
+    description: "Broader gravity variations with strong wind gusts and rotational turbulence"
+    randomization:
+      enabled: true
+      mode: "randomized"
+      gravity_range: [-12.0, -8.0]
+      wind:
+        probability: 0.8
+        power_range: [10.0, 20.0]
+        turbulence_range: [0.5, 2.0]
+
+  4:
+    name: "Stage 4: Combined Extreme Stressors"
+    description: "Extreme gravity shifts, high-velocity wind, turbulence, and initial lateral impulses"
+    randomization:
+      enabled: true
+      mode: "randomized"
+      gravity_range: [-13.0, -7.0]
+      wind:
+        probability: 0.9
+        power_range: [5.0, 25.0]
+        turbulence_range: [0.5, 2.5]
+      initial_perturbation:
+        enabled: true
+        horizontal_impulse_range: [-150.0, 150.0]

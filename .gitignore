@@ -1,0 +1,70 @@
+# ==============================================================================
+# Public / Private Boundary: Autonomous Rocket Landing
+# ==============================================================================
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Pytest & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# ==============================================================================
+# Private Research Artifacts (Retained locally in workspace, excluded from release)
+# ==============================================================================
+models/
+logs/
+checkpoints/
+full_raw_telemetry/
+local_experiments/
+development_artifacts/
+*.zip
+*.pt
+*.pth
+events.out.tfevents.*
+
+# Raw per-seed experiment directories (keep summary JSON and plots public)
+experiments/baseline/
+experiments/curriculum/
+experiments/reward_comparison/
+experiments/smoke_benchmark/
+experiments/benchmark/A_standard/
+experiments/benchmark/B_dr_only/
+experiments/benchmark/C_curriculum_only/
+experiments/benchmark/D_curriculum_and_dr/

@@ -1,0 +1,36 @@
+# Reward Shaping Configurations for Autonomous Rocket Landing (Prompt 03)
+
+# Global default strategy: 'baseline', 'potential_based', or 'energy_aware'
+strategy: "potential_based"
+
+# MDP discount factor (must match PPO gamma for theoretical policy invariance)
+gamma: 0.99
+
+# Global scaling multiplier for potential difference term F(s, s')
+shaping_scale: 1.0
+
+# Enforce Phi(s_term) = 0 for mathematically sound terminal potential handling
+zero_terminal_potential: true
+
+# Weights for potential function terms Phi(s)
+potential_weights:
+  distance: 1.0           # Euclidean distance from landing pad (0, 0)
+  velocity: 0.5           # Linear velocity magnitude sqrt(vx^2 + vy^2)
+  angle: 1.0              # Angular deviation |theta| from vertical upright
+  angular_velocity: 0.5   # Rotational roll rate |theta_dot|
+  leg_contact: 1.0        # Bonus per grounded landing leg
+
+# Scale factors for normalizing state features before potential calculation
+normalizers:
+  x: 1.5                  # Pad boundary scale
+  y: 1.5                  # Initial drop altitude scale
+  vx: 2.0                 # Typical lateral velocity scale
+  vy: 2.0                 # Typical descent velocity scale
+  theta: 0.7854           # 45 degrees in radians
+  theta_dot: 2.0          # Angular velocity scale
+
+# Energy expenditure penalties (active in 'energy_aware' strategy)
+energy_penalties:
+  main_engine: 0.05       # Penalty per frame when main central engine is fired
+  side_thruster: 0.01     # Penalty per frame when left/right attitude thruster is fired
+  control_switch: 0.005   # Penalty for rapid actuator switching (anti-chatter)

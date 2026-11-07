@@ -1,0 +1,18 @@
+# Domain Randomization Configuration for LunarLander-v3 (Prompt 04)
+
+enabled: true
+mode: "randomized" # "randomized" or "fixed"
+
+# Gravity range in m/s^2 (Standard Gymnasium default is -10.0)
+gravity_range: [-13.0, -7.0]
+
+# Wind configuration
+wind:
+  probability: 0.7          # Probability of activating aerodynamic wind per episode
+  power_range: [5.0, 25.0]  # Wind force magnitude range (Standard default is 15.0)
+  turbulence_range: [0.5, 2.5] # Turbulence torque strength (Standard default is 1.5)
+
+# Initial disturbance perturbations
+initial_perturbation:
+  enabled: true
+  horizontal_impulse_range: [-200.0, 200.0] # Additional initial horizontal impulse force

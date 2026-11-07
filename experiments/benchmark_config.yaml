@@ -1,0 +1,46 @@
+# Benchmark Configuration for Controlled Training & Robustness Validation (Prompt 05)
+
+experiment_paradigms:
+  A_standard:
+    name: "Standard PPO"
+    type: "standard"
+    description: "Nominal environment baseline control (no domain randomization, no curriculum)"
+  B_dr_only:
+    name: "PPO + Domain Randomization"
+    type: "dr_only"
+    description: "Continuous full domain randomization throughout all training timesteps"
+  C_curriculum_only:
+    name: "PPO + Curriculum Learning"
+    type: "curriculum_only"
+    description: "5-stage progressive environmental difficulty without stochastic distribution sampling"
+  D_curriculum_and_dr:
+    name: "PPO + Curriculum Learning + Domain Randomization"
+    type: "curriculum_and_dr"
+    description: "Full progressive curriculum coupled with stochastic domain randomization"
+
+training:
+  total_timesteps: 500000
+  seeds: [42, 123, 999]
+  reward_strategy: "baseline"   # Kept strictly identical across all 4 paradigms
+  ppo_config_path: "configs/ppo_config.yaml"
+  curriculum_config_path: "configs/curriculum.yaml"
+  dr_config_path: "configs/domain_randomization.yaml"
+  resume_existing: true         # Skip training if final_model.zip exists
+
+evaluation:
+  episodes_per_condition: 100   # Evaluation rollouts per stress scenario for statistical significance
+  eval_seed_base: 5000
+  deterministic: true
+
+landing_criteria:
+  max_pad_offset_x: 0.25        # Distance from pad center (|x| <= 0.25)
+  max_touchdown_vx: 0.40        # Horizontal drift velocity limit (m/s)
+  max_touchdown_vy: 0.40        # Vertical descent speed limit (m/s)
+  max_touchdown_tilt: 0.20      # Maximum tilt angle (rad, ~11.5 deg)
+  max_touchdown_spin: 0.35      # Maximum angular rate at touchdown (rad/s)
+  require_both_legs: true       # Both left and right foot sensors must confirm contact
+
+paths:
+  models_dir: "models/benchmark"
+  logs_dir: "logs/benchmark"
+  experiments_dir: "experiments/benchmark"

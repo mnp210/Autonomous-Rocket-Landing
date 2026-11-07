@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software or benchmark data in your research, please cite it as below."
+title: "Autonomous Rocket Landing using Deep Reinforcement Learning"
+abstract: "A rigorous experimental benchmark investigating Curriculum Learning and Domain Randomization for autonomous rocket landing in Box2D simulation using Proximal Policy Optimization and strict physical touchdown criteria."
+authors:
+  - name: "Autonomous Rocket Landing Contributors"
+version: 1.0.0
+date-released: 2026-11-08
+license: Apache-2.0
+repository-code: "https://github.com/your-username/Autonomous-Rocket-Landing"
+keywords:
+  - reinforcement-learning
+  - proximal-policy-optimization
+  - curriculum-learning
+  - domain-randomization
+  - robotics
+  - aerospace
+  - simulation
+  - lunar-lander
