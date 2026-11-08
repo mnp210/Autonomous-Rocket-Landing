@@ -10,6 +10,7 @@ import argparse
 from datetime import datetime
 import json
 from pathlib import Path
+import sys
 from typing import Any, Dict, Optional, Union
 import gymnasium as gym
 import numpy as np
@@ -17,6 +18,11 @@ import torch
 import yaml
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
+
+# Ensure repository root is on sys.path
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
 
 from environments.env_loader import make_environment
 from agents.ppo_agent import create_ppo_agent, load_config_file

@@ -1,7 +1,15 @@
 """Interactive flight simulation visualizer and trajectory renderer."""
 
+from pathlib import Path
+import sys
 from typing import Optional
 from stable_baselines3 import PPO
+
+# Ensure repository root is on sys.path
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
 from environments.lunar_lander import make_lunar_lander_env
 
 

@@ -10,10 +10,16 @@ from dataclasses import asdict, dataclass
 import csv
 import json
 from pathlib import Path
+import sys
 from typing import Any, Dict, List, Optional, Tuple, Union
 import gymnasium as gym
 import numpy as np
 from stable_baselines3 import PPO
+
+# Ensure repository root is on sys.path
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
 
 from environments.env_loader import make_environment
 from rewards.reward_config import RewardConfig, load_reward_config

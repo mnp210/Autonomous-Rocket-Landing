@@ -249,9 +249,10 @@ def run_benchmark_matrix(
     with open(summary_json_path, "w", encoding="utf-8") as f:
         json.dump(benchmark_summary, f, indent=2)
 
-    # Also maintain canonical benchmark_summary.json
-    with open(benchmark_root / "benchmark_summary.json", "w", encoding="utf-8") as f:
-        json.dump(benchmark_summary, f, indent=2)
+    # Maintain canonical benchmark_summary.json for full production runs
+    if not is_smoke:
+        with open(benchmark_root / "benchmark_summary.json", "w", encoding="utf-8") as f:
+            json.dump(benchmark_summary, f, indent=2)
 
     if verbose > 0:
         print("\n" + "=" * 80)
