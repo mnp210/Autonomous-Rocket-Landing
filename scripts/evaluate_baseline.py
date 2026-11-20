@@ -68,7 +68,14 @@ def main():
     parser.add_argument(
         "--render",
         action="store_true",
-        help="Render live simulation window ('human' render mode)",
+        help="Render live simulation window",
+    )
+    parser.add_argument(
+        "--renderer",
+        type=str,
+        default="cinematic",
+        choices=["cinematic", "aerospace", "gymnasium"],
+        help="Visual rendering backend when --render is active: 'cinematic' (cinematic tracking camera & dust), 'aerospace' (16:9 fixed), or 'gymnasium' (legacy 4:3)",
     )
     parser.add_argument(
         "--plot-trajectory",
@@ -104,7 +111,7 @@ def main():
     print(f" Model Path     : {model_path}")
     print(f" Test Episodes  : {args.episodes}")
     print(f" Deterministic  : {args.deterministic}")
-    print(f" Render Mode    : {'human' if args.render else 'None (headless)'}")
+    print(f" Render Mode    : {args.renderer.upper() if args.render else 'None (headless)'}")
     print(f" Output Dir     : {save_dir}")
 
     render_mode = "human" if args.render else None
@@ -121,6 +128,7 @@ def main():
         n_episodes=args.episodes,
         deterministic=args.deterministic,
         render_mode=render_mode,
+        renderer_type=args.renderer,
         output_dir=save_dir,
         reward_config=reward_cfg,
         seed=args.seed,

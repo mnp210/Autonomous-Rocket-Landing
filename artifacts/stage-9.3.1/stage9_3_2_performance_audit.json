@@ -1,0 +1,53 @@
+{
+  "gpu_diagnostics": {
+    "supported": true,
+    "vendor": "WebKit",
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "dpr": 1,
+    "viewport": "1600x1050"
+  },
+  "high_quality_preset_hardware": {
+    "frames_sampled": 711,
+    "duration_sec": 5.0,
+    "avg_fps": 142.0,
+    "median_fps": 144.9,
+    "one_percent_low_fps": 71.9,
+    "frame_time_avg_ms": 7.04,
+    "frame_time_median_ms": 6.9,
+    "frame_time_p95_ms": 7.1,
+    "frame_time_p99_ms": 13.8,
+    "draw_calls": 75,
+    "triangles": 9566,
+    "geometries_in_memory": 72,
+    "textures_in_memory": 4
+  },
+  "low_quality_preset_hardware": {
+    "frames_sampled": 499,
+    "duration_sec": 5.0,
+    "avg_fps": 99.5,
+    "median_fps": 140.8,
+    "one_percent_low_fps": 70.8,
+    "frame_time_avg_ms": 10.05,
+    "frame_time_median_ms": 7.1,
+    "frame_time_p95_ms": 14,
+    "frame_time_p99_ms": 14,
+    "draw_calls": 77,
+    "triangles": 9776,
+    "geometries_in_memory": 73,
+    "textures_in_memory": 4
+  },
+  "webgl_fallback_verified": true,
+  "fallback_transition_to_2d_passed": true,
+  "swiftshader_cpu_software": {
+    "frames_sampled": 49,
+    "duration_sec": 4.0,
+    "avg_fps": 12.0,
+    "median_fps": 12.0,
+    "one_percent_low_fps": 10.0,
+    "frame_time_avg_ms": 83.33,
+    "frame_time_median_ms": 83.3,
+    "frame_time_p95_ms": 100,
+    "frame_time_p99_ms": 100.1
+  },
+  "all_8_screenshots_verified": true
+}

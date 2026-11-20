@@ -1,0 +1,16 @@
+{
+  "shot_1": "PASSED",
+  "shot_2": "PASSED",
+  "shot_3": "PASSED",
+  "shot_4": "PASSED",
+  "shot_5": "PASSED",
+  "view_switches_completed": 20,
+  "view_switch_errors": [],
+  "shot_6": "PASSED",
+  "shot_7": "PASSED",
+  "webgl_fallback_detected": true,
+  "fallback_button_present": true,
+  "shot_8": "PASSED",
+  "status": "SUCCESS",
+  "total_shots": 8
+}

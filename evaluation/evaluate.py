@@ -11,10 +11,14 @@ import csv
 import json
 from pathlib import Path
 import sys
-from typing import Any, Dict, List, Optional, Tuple, Union
+import time
+from typing import Any, Dict, List, Optional, Tuple, Union, TYPE_CHECKING
 import gymnasium as gym
 import numpy as np
-from stable_baselines3 import PPO
+import pygame
+
+if TYPE_CHECKING:
+    from stable_baselines3 import PPO
 
 # Ensure repository root is on sys.path
 repo_root = Path(__file__).resolve().parent.parent
@@ -102,11 +106,12 @@ def classify_outcome(
 
 
 def evaluate_policy(
-    model: PPO,
+    model: Any,
     env: gym.Env,
     n_episodes: int = 100,
     deterministic: bool = True,
     render: bool = False,
+    renderer_type: str = "cinematic",
     seed: Optional[int] = 42,
     record_trajectory: bool = False,
     criteria: Optional[LandingCriteria] = None,
@@ -118,7 +123,9 @@ def evaluate_policy(
         env: Gymnasium evaluation environment.
         n_episodes: Total number of test episodes.
         deterministic: Whether to use greedy deterministic actions.
-        render: Whether to visualize rollouts (human render mode).
+        render: Whether to visualize rollouts.
+        renderer_type: 'cinematic' (cinematic tracking camera & dust),
+                       'aerospace' (modern 16:9 fixed), or 'gymnasium' (legacy 4:3).
         seed: Initial random seed.
         record_trajectory: Whether to preserve full step trajectory transitions.
         criteria: Custom physical landing criteria.
@@ -129,6 +136,15 @@ def evaluate_policy(
     crit = criteria or LandingCriteria()
     episode_records: List[Dict[str, Any]] = []
     first_episode_trajectory: List[Dict[str, Any]] = []
+
+    renderer = None
+    if render:
+        if renderer_type == "cinematic":
+            from visualization.cinematic_renderer import CinematicAerospaceRenderer
+            renderer = CinematicAerospaceRenderer(headless=False)
+        elif renderer_type == "aerospace":
+            from visualization.aerospace_renderer import AerospaceRenderer
+            renderer = AerospaceRenderer(headless=False)
 
     for ep in range(n_episodes):
         ep_seed = seed + ep if seed is not None else None
@@ -147,8 +163,24 @@ def evaluate_policy(
         idle_steps = 0
 
         while not done:
+            if renderer is not None:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                        renderer.close()
+                        renderer = None
+                        break
+
             action, _states = model.predict(obs, deterministic=deterministic)
             action_int = int(action)
+
+            if renderer is not None:
+                tel = renderer.extract_telemetry(
+                    env, obs, action=action_int, step=step_count,
+                    reward=last_step_reward, terminated=False, truncated=False,
+                    cumulative_reward=total_combined_reward, criteria=crit,
+                )
+                renderer.render_frame(env, tel)
+
             next_obs, reward, terminated, truncated, info = env.step(action_int)
 
             step_reward = float(reward)
@@ -204,6 +236,20 @@ def evaluate_policy(
             criteria=crit,
         )
 
+        if renderer is not None:
+            tel_final = renderer.extract_telemetry(
+                env, obs, action=0, step=step_count,
+                reward=last_step_reward, terminated=terminated, truncated=truncated,
+                cumulative_reward=total_combined_reward, criteria=crit,
+            )
+            hold_start = time.time()
+            while time.time() - hold_start < 1.2:
+                for event in pygame.event.get():
+                    if event.type in (pygame.QUIT, pygame.KEYDOWN):
+                        break
+                renderer.render_frame(env, tel_final)
+                time.sleep(0.02)
+
         record = {
             "episode": ep + 1,
             "cumulative_reward": round(total_combined_reward, 3),
@@ -225,6 +271,9 @@ def evaluate_policy(
             "final_step_reward": round(last_step_reward, 2),
         }
         episode_records.append(record)
+
+    if renderer is not None:
+        renderer.close()
 
     # Compute aggregate statistical metrics
     rewards = [rec["cumulative_reward"] for rec in episode_records]
@@ -306,6 +355,7 @@ def run_evaluation(
     n_episodes: int = 50,
     deterministic: bool = True,
     render_mode: Optional[str] = None,
+    renderer_type: str = "cinematic",
     output_dir: Optional[Union[str, Path]] = None,
     reward_config: Optional[Union[RewardConfig, Dict[str, Any], str]] = None,
     seed: int = 42,
@@ -313,11 +363,13 @@ def run_evaluation(
     criteria: Optional[LandingCriteria] = None,
 ) -> Dict[str, Any]:
     """Top-level evaluation runner."""
+    from stable_baselines3 import PPO
     model = PPO.load(str(model_path))
+    actual_render_mode = "human" if (render_mode == "human" and renderer_type == "gymnasium") else None
     env = make_environment(
         env_id="LunarLander-v3",
         continuous=False,
-        render_mode=render_mode,
+        render_mode=actual_render_mode,
         reward_config=reward_config,
     )
 
@@ -328,6 +380,7 @@ def run_evaluation(
             n_episodes=n_episodes,
             deterministic=deterministic,
             render=bool(render_mode == "human"),
+            renderer_type=renderer_type,
             seed=seed,
             record_trajectory=record_trajectory,
             criteria=criteria,

@@ -1,0 +1,32 @@
+# Version Control & Local Environment
+.git/
+.gitignore
+.venv/
+env/
+venv/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend dependencies/build cache
+web/node_modules/
+web/.vite/
+web/dist/
+
+# Development, testing, & scratch artifacts
+scratch/
+tests/
+artifacts/
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.svg
+.DS_Store
+Thumbs.db
