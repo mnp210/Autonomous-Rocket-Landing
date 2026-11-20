@@ -27,6 +27,10 @@ The project pairs an authoritative **50 Hz Box2D physics simulation** with a tra
 | :---: | :---: |
 | ![Manual Pilot Mode](artifacts/stage9_5_manual_pilot_mode.png) | ![Responsive Tablet](artifacts/stage9_5_responsive_tablet.png) |
 
+| 3D Realistic Rocket Design — Main Engine Braking Burn |
+| :---: |
+| ![Realistic Rocket Model — Braking Burn](artifacts/stage9_3_realistic_rocket_design.jpg) |
+
 ---
 
 ## 2. Technical Reality & Aerospace Clarification
