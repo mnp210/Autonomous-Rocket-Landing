@@ -127,7 +127,7 @@ The study investigated the interaction between **Curriculum Learning (CL)** and 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<ORG>/Autonomous-Rocket-Landing.git
+git clone https://github.com/mnp210/Autonomous-Rocket-Landing.git
 cd Autonomous-Rocket-Landing
 
 # 2. Set up Python virtual environment
@@ -218,7 +218,7 @@ If you reference this research or implementation, please cite:
   author = {Autonomous Rocket Landing Research Contributors},
   title = {Autonomous Rocket Landing using Deep Reinforcement Learning},
   year = {2026},
-  url = {https://github.com/<ORG>/Autonomous-Rocket-Landing},
+  url = {https://github.com/mnp210/Autonomous-Rocket-Landing},
   license = {Apache-2.0}
 }
 ```
