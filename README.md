@@ -27,9 +27,13 @@ The project pairs an authoritative **50 Hz Box2D physics simulation** with a tra
 | :---: | :---: |
 | ![Manual Pilot Mode](artifacts/stage9_5_manual_pilot_mode.png) | ![Responsive Tablet](artifacts/stage9_5_responsive_tablet.png) |
 
-| 3D Realistic Rocket Design — Main Engine Braking Burn |
-| :---: |
-| ![Realistic Rocket Model — Braking Burn](artifacts/stage9_3_realistic_rocket_design.jpg) |
+| 3D Realistic Rocket Design — Spaceport Braking Burn | 3D Realistic Rocket Design — Close-up Landing Pad |
+| :---: | :---: |
+| ![Realistic Rocket — Braking Burn](artifacts/stage9_3_realistic_rocket_design.jpg) | ![Realistic Rocket — Close-up Touchdown](artifacts/stage-9.3.1/stage9_3_1_overview_camera.png) |
+
+| 3D Realistic Rocket Design — Manual Pilot Engine Burn | 3D Live Operations — Follow Cam Descent |
+| :---: | :---: |
+| ![Realistic Rocket — Manual Engine Fire](artifacts/stage-9.3.1/stage9_3_1_manual_pilot_mode.png) | ![Live Operations 3D Follow Cam](artifacts/stage9_4_4_live_operations_3d.png) |
 
 ---
 
